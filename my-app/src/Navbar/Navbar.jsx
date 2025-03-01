@@ -1,6 +1,7 @@
 import React from 'react';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js'; 
-const Navbar = ({ cambiarContenido }) => {
+
+const Navbar = ({ cambiarContenido, isLoggedIn, onLogout }) => {
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
       <div className="container">
@@ -11,6 +12,7 @@ const Navbar = ({ cambiarContenido }) => {
               height: '70px', 
               marginRight: '10px' 
             }} 
+            alt="Logo"
           />
           CircuitFox
         </div>
@@ -19,9 +21,19 @@ const Navbar = ({ cambiarContenido }) => {
         </button>
         <div className="collapse navbar-collapse" id="navbarNav">
           <div className="navbar-nav ms-auto">
-            <button className="btn btn-success me-2" onClick={() => cambiarContenido('inicio')}>Inicio</button>
-            <button className="btn btn-success me-2" onClick={() => cambiarContenido('productos')}>Temario</button>
-            <button className="btn btn-success me-2" onClick={() => cambiarContenido('contacto')}>Herramientas</button>
+            {/* Mostrar botones dependiendo si el usuario está logueado */}
+            {!isLoggedIn ? (
+              <>
+                <button className="btn btn-success me-2" onClick={() => cambiarContenido('inicio')}>Inicio</button>
+                <button className="btn btn-success me-2" onClick={() => cambiarContenido('login')}>Iniciar sesión</button>
+              </>
+            ) : (
+              <>
+                <button className="btn btn-success me-2" onClick={() => cambiarContenido('temario')}>Temario</button>
+                <button className="btn btn-success me-2" onClick={() => cambiarContenido('herramientas')}>Herramientas</button>
+                <button className="btn btn-danger" onClick={onLogout}>Cerrar sesión</button>
+              </>
+            )}
           </div>
         </div>
       </div>
@@ -30,4 +42,3 @@ const Navbar = ({ cambiarContenido }) => {
 };
 
 export default Navbar;
-
